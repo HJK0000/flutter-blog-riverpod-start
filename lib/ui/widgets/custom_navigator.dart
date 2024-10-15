@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blog/_core/constants/size.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CustomNavigation extends StatelessWidget {
+import '../../data/gm/session_gm.dart';
+
+class CustomNavigation extends ConsumerWidget {
   final scaffoldKey;
   const CustomNavigation(this.scaffoldKey, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: getDrawerWidth(context),
       height: double.infinity,
@@ -34,8 +37,8 @@ class CustomNavigation extends StatelessWidget {
               const Divider(),
               TextButton(
                 onPressed: () {
-                  scaffoldKey.currentState!.openEndDrawer();
-                  Navigator.popAndPushNamed(context, "/login");
+                  //scaffoldKey.currentState!.openEndDrawer(); -> 화면이 바뀌니까 이건 필요없다. 이건 화면이 전환될때 endDrawer가 닫히게 하거나 열리게 하는 코드임
+                  ref.read(sessionProvider).logout();
                 },
                 child: const Text(
                   "로그아웃",
